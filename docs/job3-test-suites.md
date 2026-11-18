@@ -15,7 +15,6 @@ With Code Mode on, Claude can start all three suites at the same time from one p
 Tool calls Claude asked for           │ 4               │ 1 (1 code)
 Tool calls that ran                   │ 4               │ 3
 Model turns                           │ 3               │ 2
-Working time (Claude's timer)         │ 37s             │ 15s
 Tool output read by Claude (chars)    │ 2,281           │ 602
 Context added during the job (tokens) │ 14,120          │ 4,100
 Tokens in, all turns (incl. cached)   │ 148,891         │ 54,870
@@ -23,7 +22,7 @@ Tokens out                            │ 585             │ 364
 ```
 Both runs reported the right result for all three suites.
 
-With Code Mode off, the three suites ran one after another (about 12 seconds each). One of the four calls was Claude loading the `/job3-tests` command itself. With it on, Claude's code started all three with `Promise.all`:
+With Code Mode off, the three suites ran one after another. One of the four calls was Claude loading the `/job3-tests` command itself. With it on, Claude's code started all three with `Promise.all`:
 ```js
 const names=['billing','search','reports'];
 const res=await Promise.all(names.map(n=>$`npm run test:${{raw:n}} 2>&1`.nothrow().timeout(120000)));
