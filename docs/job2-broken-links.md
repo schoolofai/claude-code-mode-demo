@@ -4,7 +4,7 @@ This is the prompt from the "Try Code Mode" section of Anthropic's docs, pointed
 > Read every Markdown file in this project and list the links that point to local files that don't exist.
 
 ## The setup
-`job2-docs/` has 40 Markdown files (guides, API pages, tutorials, release notes, reference) with a few hundred links. Some point to files that don't exist.
+`job2-docs/` has 40 Markdown files (guides, API pages, tutorials, release notes, reference) with about 340 links. Some point to files that don't exist.
 
 ## The prompt (`/job2-links`)
 > Read every Markdown file in job2-docs and list the links that point to local files that don't exist. Give the file and the link for each one. Don't change any files.
@@ -16,3 +16,6 @@ The links come in every shape Markdown allows: relative paths (`../api/tokens.md
 
 ## Check it
 There are 30 broken local links. The answer key is kept outside this repo, so Claude can't read it.
+
+## What I got
+See [results.md](results.md).
