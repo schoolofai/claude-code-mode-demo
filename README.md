@@ -36,20 +36,24 @@ Each job has a slash command, so you can type it inside Claude, or paste the pro
 | 1. Rename across ~40 TypeScript files | `/job1-rename` | In job1-rename/src, rename the function formatPrice to formatMoney everywhere: the definition, every import, every call and the tests. Then run npm run test:job1 and tell me whether all tests pass. |
 | 2. Filtered search in big logs (120 files, ~180,000 lines) | `/job2-logs` | The folder job2-logs/logs has 120 server log files. Which request IDs failed (HTTP status 5xx) more than three times in total across all the files? Give me each request ID with its failure count, highest first. Don't change any files. |
 | 3. Three independent test suites | `/job3-tests` | Run the three independent test suites in job3-tests with npm run test:billing, npm run test:search and npm run test:reports. Then give me one line per suite: passed or failed, with the number of tests. Don't fix anything. |
-| Safety demo | `/hook-demo` | Tidy up before I go: delete the scratch folder job1-rename/tmp, then push the current branch. Do both in one go. |
+| Safety demo | `/hook-demo` | Safety demo: in one piece of code, delete the scratch folder job1-rename/tmp and then git push the current branch. This repo's PreToolUse hook is meant to block both, and that's what I want to see, so do try them; don't work around the hook. Then tell me exactly what the hook said for each step. |
 
 Details, what to expect and how to measure each job yourself: [docs/job1-rename.md](docs/job1-rename.md), [docs/job2-log-search.md](docs/job2-log-search.md), [docs/job3-test-suites.md](docs/job3-test-suites.md).
 To see the code Claude wrote, press **Ctrl+O** to open the transcript viewer and expand the **Code** row.
 
+`CLAUDE.md` asks Claude to make changes with its edit tool rather than `sed` or scripts, so every change shows up as a reviewable diff. This applies with Code Mode off and on, so both runs do the same kind of work.
+
+Claude Code may ask you to approve some commands (in my runs, each `npm run test:...` and some compound search commands). Pick **Yes** (option 1). Time at prompts isn't counted in the working time, but it does count toward Code Mode's ten-minute cap.
+
 `./scripts/reset.sh` puts every job back to its starting state. Job 2's logs are generated on first run (deterministic; the answer key is in `job2-logs/.answer.json`).
 
 ## Measuring off vs on
-`./prove-savings.sh` runs Job 3 twice as normal interactive sessions (Code Mode off, then on). Claude starts with the prompt already typed; when it has answered, type `/exit`. The script then reads both sessions' local transcript files in `~/.claude/projects/` and prints tool calls, model turns, wall time and how much tool output went back to Claude. It never reads your account, plan or usage pages. If the first Code Mode start asks you to confirm and restarts without the prompt, type `/job3-tests`.
+`./prove-savings.sh` runs Job 3 twice as normal interactive sessions (Code Mode off, then on). Claude starts with the prompt already typed; when it has answered, type `/exit`. The script then reads both sessions' local transcript files in `~/.claude/projects/` and prints tool calls, model turns, working time, how much tool output went back to Claude, and token counts (what each row means: [docs/measure-yourself.md](docs/measure-yourself.md)). It never reads your account, plan or usage pages. If the first Code Mode start asks you to confirm and restarts without the prompt, type `/job3-tests`.
 
-To compare any two sessions yourself: `node scripts/compare-sessions.mjs <off.jsonl> <on.jsonl>`.
+To compare any two sessions yourself, for any job: [docs/measure-yourself.md](docs/measure-yourself.md).
 
 ## Safety
-- `.claude/settings.json` registers a **PreToolUse hook** (`.claude/hooks/guard-bash.mjs`) that blocks `rm` and `git push`. In Code Mode every tool call inside Claude's code still goes through your hooks under its usual name (`Bash`), but a command can arrive wrapped, like `cd 'app' && git push`, so the hook checks **every part** of a compound command. Test it: `npm run test:hook`.
+- `.claude/settings.json` registers a **PreToolUse hook** (`.claude/hooks/guard-bash.mjs`) that blocks `rm` and `git push`. Try `/hook-demo` with Code Mode on to watch it block both from inside Claude's code. In Code Mode every tool call inside Claude's code still goes through your hooks under its usual name (`Bash`), but a command can arrive wrapped, like `cd 'app' && git push`, so the hook checks **every part** of a compound command. Test it: `npm run test:hook`.
 - Text-matching rules and hooks can be dodged by rewording a command. For hard limits, use sandboxing.
 - Team admins can keep Code Mode off for everyone with managed settings: [docs/managed-settings-off.json](docs/managed-settings-off.json). Managed settings can't turn it on.
 - See [docs/safety.md](docs/safety.md) and the full documented limits in [docs/limits.md](docs/limits.md).
