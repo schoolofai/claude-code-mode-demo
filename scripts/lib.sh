@@ -21,5 +21,4 @@ check_claude() {
 
 ensure_setup() {
   if [ ! -d node_modules ]; then echo "Installing test dependencies (first run only)..."; npm install --silent --no-audit --no-fund >/dev/null 2>&1 || npm install --no-audit --no-fund; fi
-  if [ ! -d job2-logs/logs ]; then node scripts/seed-job2.mjs >/dev/null; fi
 }

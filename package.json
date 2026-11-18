@@ -2,16 +2,16 @@
   "name": "claude-code-mode-demo",
   "private": true,
   "version": "1.0.0",
-  "description": "Three jobs to compare Claude Code with Code Mode off and on, plus a safety hook.",
+  "description": "Three jobs to compare Claude Code with Code Mode off and on.",
   "type": "module",
   "scripts": {
     "test": "vitest run",
-    "test:job1": "vitest run job1-rename",
     "test:billing": "vitest run job3-tests/billing",
     "test:search": "vitest run job3-tests/search",
     "test:reports": "vitest run job3-tests/reports",
     "test:hook": "node scripts/test-hook.mjs",
-    "seed": "node scripts/seed-job1.mjs && node scripts/seed-job2.mjs"
+    "seed": "node scripts/seed-job1.mjs",
+    "test:job1": "vitest run job1-currency"
   },
   "devDependencies": {
     "typescript": "^5.6.0",
