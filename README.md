@@ -43,8 +43,6 @@ Each job has a slash command, so you can type it inside Claude, or paste the pro
 Details, what to expect and how to measure each job yourself: [docs/job1-rename.md](docs/job1-rename.md), [docs/job2-log-search.md](docs/job2-log-search.md), [docs/job3-test-suites.md](docs/job3-test-suites.md).
 To see the code Claude wrote, press **Ctrl+O** to open the transcript viewer and expand the **Code** row.
 
-`CLAUDE.md` asks Claude to make changes with its edit tool rather than `sed` or scripts, so every change shows up as a reviewable diff. This applies with Code Mode off and on, so both runs do the same kind of work.
-
 Claude Code may ask you to approve some commands (in my runs, each `npm run test:...` and some compound search commands). Pick **Yes** (option 1). Time at prompts isn't counted in the working time, but it does count toward Code Mode's ten-minute cap.
 
 `./scripts/reset.sh` puts every job back to its starting state. Job 2's logs are generated on first run (deterministic; the answer key is in `job2-logs/.answer.json`).

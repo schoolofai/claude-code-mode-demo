@@ -6,10 +6,8 @@
 **Check the result:** `npm run test:job1` (40 tests) and `rg formatPrice job1-rename` (should find nothing). **Reset:** `./scripts/reset.sh`.
 
 ## What to expect
-- **Code Mode off:** Claude reads each file before it edits it, so you see a long run of Read and Update rows, then the test run.
-- **Code Mode on:** a short search, then one or two **Code** rows. You still see every edit's diff in the conversation, but not the code. Press **Ctrl+O** to open the transcript viewer and expand the Code row to read the JavaScript.
-
-`CLAUDE.md` asks Claude to make changes with its edit tool, not `sed`, so every change shows up as a diff. That applies with Code Mode off and on.
+- **Code Mode off:** Claude works through it with individual tool calls (edits or shell commands), then runs the tests.
+- **Code Mode on:** a short search, then one or two **Code** rows. You still see the individual tool calls in the conversation (for edits, their diffs), but not the code. Press **Ctrl+O** to open the transcript viewer and expand the Code row to read the JavaScript.
 
 ## What I got (18 Nov 2026, Claude Code 2.1.327, Opus 5.5, one run each, fresh clones)
 | | Off | On |
