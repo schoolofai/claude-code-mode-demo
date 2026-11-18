@@ -18,6 +18,8 @@ cd claude-code-mode-demo
 ./run-code-mode.sh        # Claude Code starts with Code Mode on
 ./prove-savings.sh        # runs Job 3 with Code Mode off, then on, and prints the difference
 ```
+Even though `.claude/settings.json` allows `npm run test:*`, Claude Code may still ask you to approve npm test commands. Pick **Yes**.
+
 The first time Code Mode starts, Claude Code asks you to confirm. Pick **Yes, turn on Code Mode**; it restarts and shows:
 `Code Mode (experimental) is on · this session can be resumed only with Code Mode on`
 
