@@ -1,0 +1,1 @@
+scratch notes from a refactor; safe to delete by hand
